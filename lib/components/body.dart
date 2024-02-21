@@ -1,112 +1,202 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:plantapp/components/header_with_searches.dart';
+import 'package:plantapp/components/title_wit_more_button.dart';
+
 import 'package:plantapp/constatnts.dart';
 
 class Body extends StatelessWidget {
-  const Body({super.key});
+  const Body({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // It will provide us the total height and width of our screen
-
     Size size = MediaQuery.of(context).size;
-    // it enabel scrolling on small device
+
+    // it enables scrolling on small devices
     return SingleChildScrollView(
       child: Column(
-        children: <Widget>[HeaderWithSearchBox(size: size)],
+        children: <Widget>[
+          HeaderWithSearchBox(size: size),
+          TitleWithMoreButton(
+            title: 'recommended',
+            press: () {},
+          ),
+
+//it wil cover 40% of our total width
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                RecommendPlantCard(
+                    image: "assets/images/roseone.jpg",
+                    title: "Kasadnra",
+                    country: "Russia",
+                    price: 440,
+                    mypress: () {}),
+                RecommendPlantCard(
+                    image: "assets/images/roseone.jpg",
+                    title: "Kasadnra",
+                    country: "Russia",
+                    price: 440,
+                    mypress: () {}),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }
 }
 
-class HeaderWithSearchBox extends StatelessWidget {
-  const HeaderWithSearchBox({
-    super.key,
-    required this.size,
-  });
-
-  final Size size;
-
+class RecommendPlantCard extends StatelessWidget {
+  RecommendPlantCard(
+      {required this.image,
+      required this.title,
+      required this.country,
+      required this.price,
+      required this.mypress});
+  final String image;
+  final String title;
+  final String country;
+  final int price;
+  final Function() mypress;
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.only(bottom: KDefalutPadding * 2.5),
-      //it will cover 20% of our ktotal height
-      height: size.height * 0.2,
-      child: Stack(
+      margin: EdgeInsets.only(
+          left: KDefalutPadding,
+          top: KDefalutPadding / 2,
+          bottom: KDefalutPadding * 2.5),
+      width: size.width * 0.4,
+      child: Column(
         children: <Widget>[
-          //Marr
-          Container(
-            padding: EdgeInsets.only(
-                left: KDefalutPadding,
-                right: KDefalutPadding,
-                bottom: 36 + KDefalutPadding),
-            height: size.height * 0.2 - 27,
-            decoration: BoxDecoration(
-              color: KPrimaryColor,
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(36),
-                bottomRight: Radius.circular(36),
-              ),
-            ),
-            child: Row(
-              children: <Widget>[
-                Text(
-                  'Hi Planto!',
-                  style: Theme.of(context).textTheme.headline6!.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-                Spacer(),
-                Image.asset("assets/images/logo.png"),
-              ],
-            ),
+          PlantImg(
+            myimage: image,
           ),
-          Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.symmetric(horizontal: KDefalutPadding),
-                padding: EdgeInsets.symmetric(horizontal: KDefalutPadding),
-                height: 54,
-                decoration: BoxDecoration(
+          GestureDetector(
+            onTap: mypress,
+            child: Container(
+              padding: EdgeInsets.all(KDefalutPadding / 2),
+              decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(10.0),
+                      bottomRight: Radius.circular(10.0)),
                   boxShadow: [
                     BoxShadow(
                       offset: Offset(0, 10),
                       blurRadius: 50,
                       color: KPrimaryColor.withOpacity(0.23),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: TextField(
-                        onChanged: (value) {},
-                        decoration: InputDecoration(
-                          hintText: "Search",
-                          hintStyle: TextStyle(
-                            color: KPrimaryColor.withOpacity(0.5),
-                          ),
-                          enabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          // suffix is not working properly with SVG
-                          //that why we use row
-                        ),
+                    )
+                  ]),
+              child: Row(
+                children: <Widget>[
+                  RichText(
+                    text: TextSpan(children: [
+                      TextSpan(
+                        text: "$title\n".toUpperCase(),
+                        style: Theme.of(context).textTheme.button,
                       ),
-                    ),
-                    SvgPicture.asset("assets/icons/search-svgrepo-com.svg"),
-                  ],
-                ),
-              ))
+                      TextSpan(
+                          text: country.toUpperCase(),
+                          style:
+                              TextStyle(color: KPrimaryColor.withOpacity(0.5))),
+                    ]),
+                  ),
+                  Spacer(),
+                  Text(
+                    '\$$price',
+                    style: Theme.of(context)
+                        .textTheme
+                        .button
+                        ?.copyWith(color: KPrimaryColor),
+                  )
+                ],
+              ),
+            ),
+          )
         ],
       ),
-      color: Colors.black,
+    );
+  }
+}
+
+class PlantImg extends StatelessWidget {
+  PlantImg({
+    required this.myimage,
+  });
+  final String myimage;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(50), // Adjust the radius as needed
+        child: Image.asset(
+          myimage, // Path to your image asset
+          width: 100, // Set the width of the image
+          height: 100, // Set the height of the image
+          fit: BoxFit.cover, // Adjust how the image fits within the container
+        ),
+      ),
+    );
+  }
+}
+
+class TitleWithCustomUnderLine extends StatelessWidget {
+  final String mytext;
+
+  TitleWithCustomUnderLine({required this.mytext});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 24,
+      child: Stack(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(
+                KDefalutPadding / 4), // Corrected typo here
+            child: Text(
+              mytext,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            right: 0,
+            left: 0,
+            child: Container(
+              margin: EdgeInsets.only(
+                  right: KDefalutPadding / 4), // Corrected typo here
+              height: 7,
+              color: Colors.red,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class RoundIconButton extends StatelessWidget {
+  RoundIconButton({required this.icon});
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      child: Icon(icon),
+      elevation: 0.0,
+      constraints: BoxConstraints.tightFor(
+        width: 56.0,
+        height: 56.0,
+      ),
+      shape: CircleBorder(),
+      fillColor: Color(0xFF4C4F5E),
+      onPressed: () {},
     );
   }
 }
