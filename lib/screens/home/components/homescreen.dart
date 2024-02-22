@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:plantapp/components/body.dart';
+import 'package:plantapp/constatnts.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -19,6 +20,7 @@ class HomeScreen extends StatelessWidget {
       leading: IconButton(
           onPressed: () {},
           icon: SvgPicture.asset("assets/icons/menu-alt-04-svgrepo-com.svg")),
+      backgroundColor: KPrimaryColor,
     );
   }
 }

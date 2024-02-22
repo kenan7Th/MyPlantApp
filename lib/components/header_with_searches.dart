@@ -42,7 +42,14 @@ class HeaderWithSearchBox extends StatelessWidget {
                       ),
                 ),
                 Spacer(),
-                Image.asset("assets/images/logo.png"),
+                ClipOval(
+                  child: Image.asset(
+                    'assets/images/logo.png',
+                    width: 50, // Adjust the width as needed
+                    height: 50, // Adjust the height as needed
+                    fit: BoxFit.cover,
+                  ),
+                )
               ],
             ),
           ),
@@ -89,7 +96,6 @@ class HeaderWithSearchBox extends StatelessWidget {
               ))
         ],
       ),
-      color: Colors.black,
     );
   }
 }
