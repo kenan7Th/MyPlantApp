@@ -13,7 +13,7 @@ class RecommendPlantCard extends StatelessWidget {
   final String title;
   final String country;
   final int price;
-  final Function() mypress;
+  final Function()? mypress;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

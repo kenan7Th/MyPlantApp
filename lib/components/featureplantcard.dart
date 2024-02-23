@@ -7,7 +7,7 @@ class FeaturePlantedCar extends StatelessWidget {
     required this.my2press,
   });
   final String my2image;
-  final Function() my2press;
+  final Function()? my2press;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
