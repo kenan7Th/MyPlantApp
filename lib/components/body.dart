@@ -5,6 +5,7 @@ import 'package:plantapp/components/recomended_plants.dart';
 import 'package:plantapp/components/title_wit_more_button.dart';
 
 import 'package:plantapp/constatnts.dart';
+import 'package:plantapp/screens/detalis/detailscomponents/detailscreen.dart';
 
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);
@@ -34,7 +35,12 @@ class Body extends StatelessWidget {
                     title: "Kasadnra",
                     country: "Russia",
                     price: 440,
-                    mypress: () {}),
+                    mypress: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DetailsScreen()));
+                    }),
                 RecommendPlantCard(
                     image: "assets/images/roseone.jpg",
                     title: "Kasadnra",

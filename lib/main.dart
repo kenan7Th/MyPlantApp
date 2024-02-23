@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plantapp/constatnts.dart';
-import 'package:plantapp/screens/home/components/homescreen.dart';
+import 'package:plantapp/screens/detalis/detailscomponents/detailscreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,6 +21,6 @@ class MyApp extends StatelessWidget {
           textTheme: Theme.of(context).textTheme.apply(bodyColor: KTextColor),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: const HomeScreen());
+        home:  DetailsScreen());
   }
 }
